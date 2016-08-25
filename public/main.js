@@ -10,6 +10,11 @@ $(function () {
         betaData = [],
         gammaData = [];
 
+    var uuid = '';
+    socket.on('uuid', function (data) {
+        uuid = data.uuid;
+    });
+
 
     var motionChart = echarts.init(document.getElementById('accelerometer'));
     motionChart.setOption({
@@ -113,6 +118,7 @@ $(function () {
         });
 
         socket.emit('motion', {
+            uuid: uuid,
             x: event.accelerationIncludingGravity.x,
             y: event.accelerationIncludingGravity.y,
             z: event.accelerationIncludingGravity.z
@@ -144,6 +150,7 @@ $(function () {
         });
 
         socket.emit('orientation', {
+            uuid: uuid,
             alpha: event.alpha,
             beta: event.beta,
             gamma: event.gamma
