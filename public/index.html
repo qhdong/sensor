@@ -3,13 +3,16 @@
 <head>
     <meta charset="utf-8">
     <title>Mobile Sensors</title>
+    <script src="//npmcdn.com/echarts@3.2.3/dist/echarts.min.js"></script>
+    <script src="//cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body>
     <div id="status">
         <p><strong>orientation-event</strong> is supported.</p>
     </div>
-    <div id="accelerometer"></div>
-    <div id="magnetometer"></div>
+    <div id="accelerometer" style="width: 600px; height: 400px;"></div>
+    <div id="magnetometer"  style="width: 600px; height: 400px;"></div>
+
     <script src="/socket.io/socket.io.js"></script>
     <script src="main.js" charset="utf-8"></script>
 </body>
