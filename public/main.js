@@ -1,6 +1,16 @@
 $(function () {
     var socket = io();
 
+    var POINTS = 1000;
+
+    var xData = [],
+        yData = [],
+        zData = [],
+        alphaData = [],
+        betaData = [],
+        gammaData = [];
+
+
     var motionChart = echarts.init(document.getElementById('accelerometer'));
     motionChart.setOption({
         title: {
@@ -8,17 +18,25 @@ $(function () {
         },
         tooltip: {},
         legend: {
-            data: ['加速度']
+            data: ['x', 'y', 'z']
         },
-        xAxis: {
-            data: []
-        },
+        xAxis: {},
         yAxis: {},
-        series: [{
-            name: '加速度',
-            type: 'bar',
-            data: []
-        }]
+        series: [
+            {
+                name: 'x',
+                type: 'line',
+                data: []
+            }, {
+                name: 'y',
+                type: 'line',
+                data: []
+            }, {
+                name: 'z',
+                type: 'line',
+                data: []
+            }
+        ]
     });
 
     var orientationChart = echarts.init(document.getElementById('magnetometer'));
@@ -28,32 +46,50 @@ $(function () {
         },
         tooltip: {},
         legend: {
-            data: ['方位角度']
+            data: ['alpha', 'gamma', 'beta']
         },
-        xAxis: {
-            data: []
-        },
+        xAxis: {},
         yAxis: {},
-        series: [{
-            name: '方位角度',
-            type: 'bar',
-            data: []
-        }]
+        series: [
+            {
+                name: 'alpha',
+                type: 'line',
+                data: []
+            }, {
+                name: 'beta',
+                type: 'line',
+                data: []
+            }, {
+                name: 'gamma',
+                type: 'line',
+                data: []
+            }
+        ]
     });
 
     function motion(event) {
+        if (xData.length > POINTS) {
+            xData.shift();
+            yData.shift();
+            zData.shift();
+        }
+
+        xData.push(event.accelerationIncludingGravity.x);
+        yData.push(event.accelerationIncludingGravity.y);
+        zData.push(event.accelerationIncludingGravity.z);
+
         motionChart.setOption({
-            xAxis: {
-                data: ['x', 'y', 'z']
-            },
             series: [{
-                name: '加速度',
-                data: [
-                    event.accelerationIncludingGravity.x,
-                    event.accelerationIncludingGravity.y,
-                    event.accelerationIncludingGravity.z
-                ]
-            }]
+                name: 'x',
+                data: xData
+            }, {
+                name: 'y',
+                data: yData
+            }, {
+                name: 'z',
+                data: zData
+            }
+            ]
         });
 
         socket.emit('motion', {
@@ -64,17 +100,26 @@ $(function () {
     }
 
     function orientation(event) {
+        if (alphaData.length > POINTS) {
+            alphaData.shift();
+            betaData.shift();
+            gammaData.shift();
+        }
+
+        alphaData.push(event.alpha);
+        betaData.push(event.beta);
+        gammaData.push(event.gamma);
+
         orientationChart.setOption({
-            xAxis: {
-                data: ['alpha', 'beta', 'gamma']
-            },
             series: [{
-                name: '方位角度',
-                data: [
-                    event.alpha,
-                    event.beta,
-                    event.gamma
-                ]
+                name: 'alpha',
+                data: alphaData
+            }, {
+                name: 'beta',
+                data: betaData
+            }, {
+                name: 'gamma',
+                data: gammaData
             }]
         });
 
