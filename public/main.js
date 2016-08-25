@@ -20,8 +20,18 @@ $(function () {
         legend: {
             data: ['x', 'y', 'z']
         },
-        xAxis: {},
-        yAxis: {},
+        xAxis: {
+            type: 'time',
+            splitLine: {
+                show: false
+            }
+        },
+        yAxis: {
+            type: 'value',
+            splitLine: {
+                show: false
+            }
+        },
         series: [
             {
                 name: 'x',
@@ -48,8 +58,18 @@ $(function () {
         legend: {
             data: ['alpha', 'gamma', 'beta']
         },
-        xAxis: {},
-        yAxis: {},
+        xAxis: {
+            type: 'time',
+            splitLine: {
+                show: false
+            }
+        },
+        yAxis: {
+            type: 'value',
+            splitLine: {
+                show: false
+            }
+        },
         series: [
             {
                 name: 'alpha',
