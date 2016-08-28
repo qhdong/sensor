@@ -1,5 +1,5 @@
 $(function () {
-    var socket = io();
+    var socket = io.connect('http://115.159.83.89');
 
     var POINTS = 1000;
 
@@ -13,6 +13,7 @@ $(function () {
     var uuid = '';
     socket.on('uuid', function (data) {
         uuid = data.uuid;
+        $('#uuid').html(uuid);
     });
 
 
