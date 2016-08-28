@@ -1,5 +1,5 @@
 $(function () {
-    var socket = io.connect('http://115.159.83.89');
+    var socket = io.connect('http://115.159.83.89:3000');
 
     var POINTS = 1000;
 
